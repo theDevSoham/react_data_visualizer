@@ -1,11 +1,20 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
 /* eslint-disable eol-last */
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import type { ReactElement } from 'react'
+import Loading from './components/Loading'
+const Header = React.lazy(() => import('./components/Header'))
+const Body = React.lazy(() => import('./components/Body'))
 
 const App: React.FC = (): ReactElement => {
   return (
-    <div className='text-3xl font-bold underline'>App</div>
+    <div className='w-screen h-screen'>
+      <Suspense fallback={<Loading />}>
+        <Header />
+        <Body />
+      </Suspense>
+    </div>
   )
 }
 
