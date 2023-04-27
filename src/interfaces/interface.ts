@@ -18,7 +18,6 @@ interface SeriesItems {
   name: string
   type: 'line' | 'bar'
   stack?: string
-  areaStyle?: { normal: Record<never, never> }
   data: number[]
 }
 
@@ -58,4 +57,9 @@ interface Options {
   series: SeriesItems[]
 }
 
-export type { WineData, Options, SeriesItems }
+interface Tab {
+  name: 'Line View' | 'Bar View' | 'Raw JSON'
+  id: 'line' | 'bar' | 'raw'
+}
+
+export type { WineData, Options, SeriesItems, Tab }

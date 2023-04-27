@@ -1,4 +1,4 @@
-import type { Options } from '../interfaces/interface'
+import type { Options, Tab } from '../interfaces/interface'
 
 const InitialOptions: Options = {
   title: {
@@ -55,4 +55,19 @@ const InitialOptions: Options = {
   ]
 }
 
-export { InitialOptions }
+const tabs: Tab[] = [
+  {
+    name: 'Line View',
+    id: 'line'
+  },
+  {
+    name: 'Bar View',
+    id: 'bar'
+  },
+  {
+    name: 'Raw JSON',
+    id: 'raw'
+  }
+]
+
+export { InitialOptions, tabs }

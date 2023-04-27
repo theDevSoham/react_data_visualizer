@@ -8,7 +8,7 @@
 import React from "react";
 
 // importing wine data from json file
-import data from "../assets/Wine-Data.json"
+import data from "../assets/Wine-Data.json";
 
 // importing the core library.
 import ReactEChartsCore from "echarts-for-react/lib/core";
@@ -25,12 +25,12 @@ import {
   LegendComponent,
   ToolboxComponent,
   // DatasetComponent,
-} from "echarts/components"
+} from "echarts/components";
 
 // Importing renderer, note that introducing the CanvasRenderer or SVGRenderer is a required step
-import { CanvasRenderer } from "echarts/renderers"
-import type { Options } from "../interfaces/interface";
-import { InitialOptions } from "../static/static";
+import { CanvasRenderer } from "echarts/renderers";
+import type { Options, Tab } from "../interfaces/interface";
+import { InitialOptions, tabs } from "../static/static";
 import { getSeriesData } from "../static/helperFunctions";
 
 // Register the required components
@@ -43,17 +43,23 @@ echarts.use([
   CanvasRenderer,
   LegendComponent,
   ToolboxComponent,
-])
+]);
 
 const Body: React.FC = () => {
   const [option, setOption] = React.useState<Options>(InitialOptions);
+  const [currentTab, setCurrentTab] = React.useState<Tab['id']>(tabs[0].id);
+
+  const selectTab = (e: React.MouseEvent<HTMLButtonElement>, id: string): void => {
+    e.preventDefault();
+    setCurrentTab(id as Tab['id']);
+  };
 
   React.useEffect(() => {
-    setOption(option => {
+    setOption((option) => {
       return {
         ...option,
         title: {
-          text: "Wine Data Line Chart",
+          text: `Wine Data - ${currentTab as string}`,
           padding: 20,
         },
         legend: {
@@ -64,30 +70,62 @@ const Body: React.FC = () => {
             type: "category",
             boundaryGap: false,
             data: Object.keys(data[0]),
-          }
+          },
         ],
         yAxis: [
           {
             type: "value",
-          }
+          },
         ],
 
-        series: getSeriesData(data)
-      }
+        series: getSeriesData(data, currentTab),
+      };
     });
-  }, [data]);
+  }, [data, currentTab]);
 
   return (
     <section className="w-full h-8/10 px-10">
-      <ReactEChartsCore
-        echarts={echarts}
-        option={option}
-        notMerge={true}
-        lazyUpdate={true}
-        theme={"dark"}
-        opts={{ renderer: "canvas" }}
-		    style={{ height: 400 }}
-      />
+      <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+        {tabs.map((tab, index) => {
+          if (currentTab === tab.id) {
+            return (
+            <li className="mr-2" key={index}>
+              <button
+                className="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
+                onClick={(e) => { selectTab(e, tab.id); }}
+              >
+                {tab.name}
+              </button>
+            </li>)
+          } else {
+            return (
+              <li className="mr-2" key={index}>
+                <button
+                  className="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                  onClick={(e) => { selectTab(e, tab.id); }}
+                >
+                  {tab.name}
+                </button>
+              </li>
+            )
+          }
+        })}
+      </ul>
+
+      <div className="mt-6">
+        {currentTab !== 'raw'
+        ? <ReactEChartsCore
+          echarts={echarts}
+          option={option}
+          notMerge={true}
+          lazyUpdate={true}
+          theme={"dark"}
+          opts={{ renderer: "canvas" }}
+          style={{ height: 400 }}
+        />
+        : <div className="overflow-x-auto">xxx</div>
+        }
+      </div>
     </section>
   );
 };
