@@ -32,6 +32,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import type { Options, Tab } from "../interfaces/interface";
 import { InitialOptions, tabs } from "../static/static";
 import { getSeriesData } from "../static/helperFunctions";
+import JSONViewer from "./JSONViewer";
 
 // Register the required components
 echarts.use([
@@ -136,7 +137,9 @@ const Body: React.FC = () => {
             </button>
             </div>
         </div>
-        : <div className="overflow-auto">xxx</div>
+        : <div className="overflow-auto">
+          <JSONViewer />
+        </div>
         }
       </div>
     </section>
