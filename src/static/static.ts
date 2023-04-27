@@ -8,7 +8,8 @@ const InitialOptions: Options = {
     trigger: 'axis'
   },
   legend: {
-    data: ['Def1', 'Def2', 'Def3']
+    data: ['Def1', 'Def2', 'Def3'],
+    show: true
   },
   toolbox: {
     feature: {

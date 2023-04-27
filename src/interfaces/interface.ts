@@ -31,9 +31,7 @@ interface Options {
   }
   legend?: {
     data: string[]
-    padding?: number
-    orient?: 'horizontal' | 'vertical'
-    bottom?: string | number
+    show: boolean
   }
   toolbox: {
     feature: {

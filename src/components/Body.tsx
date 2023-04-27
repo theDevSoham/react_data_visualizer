@@ -48,6 +48,7 @@ echarts.use([
 const Body: React.FC = () => {
   const [option, setOption] = React.useState<Options>(InitialOptions);
   const [currentTab, setCurrentTab] = React.useState<Tab['id']>(tabs[0].id);
+  const [showLegend, setShowLegend] = React.useState<boolean>(false);
 
   const selectTab = (e: React.MouseEvent<HTMLButtonElement>, id: string): void => {
     e.preventDefault();
@@ -64,6 +65,7 @@ const Body: React.FC = () => {
         },
         legend: {
           data: Object.keys(data[0]),
+          show: showLegend
         },
         xAxis: [
           {
@@ -81,7 +83,7 @@ const Body: React.FC = () => {
         series: getSeriesData(data, currentTab),
       };
     });
-  }, [data, currentTab]);
+  }, [data, currentTab, showLegend]);
 
   return (
     <section className="w-full h-8/10 px-10">
@@ -114,15 +116,26 @@ const Body: React.FC = () => {
 
       <div className="mt-6">
         {currentTab !== 'raw'
-        ? <ReactEChartsCore
-          echarts={echarts}
-          option={option}
-          notMerge={true}
-          lazyUpdate={true}
-          theme={"dark"}
-          opts={{ renderer: "canvas" }}
-          style={{ height: 400 }}
-        />
+        ? <div>
+            <ReactEChartsCore
+              echarts={echarts}
+              option={option}
+              notMerge={true}
+              lazyUpdate={true}
+              theme={"dark"}
+              opts={{ renderer: "canvas" }}
+              style={{ height: 400 }}
+            />
+
+            <div className="mt-6">
+            <button
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              onClick={() => { setShowLegend(showLegend => !showLegend) }}
+            >
+              Toggle Legend
+            </button>
+            </div>
+        </div>
         : <div className="overflow-x-auto">xxx</div>
         }
       </div>
