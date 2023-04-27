@@ -13,6 +13,7 @@ const getSeriesData = (
       name: key,
       type: currentTab !== 'raw' ? currentTab : 'line',
       stack: currentTab === 'line' ? 'stack' : undefined,
+      smooth: currentTab === 'line',
       data: data.map((wine: WineData) => {
         if (isNumber(wine[key as keyof WineData])) {
           return wine[key as keyof WineData]

@@ -86,7 +86,7 @@ const Body: React.FC = () => {
   }, [data, currentTab, showLegend]);
 
   return (
-    <section className="w-full h-8/10 px-10">
+    <section className="w-full h-8/10 md:px-10 px-4">
       <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
         {tabs.map((tab, index) => {
           if (currentTab === tab.id) {
@@ -114,9 +114,9 @@ const Body: React.FC = () => {
         })}
       </ul>
 
-      <div className="mt-6">
+      <div className="mt-6 w-full md:h-7/10 h-3/10">
         {currentTab !== 'raw'
-        ? <div>
+        ? <div className="w-full h-full">
             <ReactEChartsCore
               echarts={echarts}
               option={option}
@@ -124,19 +124,19 @@ const Body: React.FC = () => {
               lazyUpdate={true}
               theme={"dark"}
               opts={{ renderer: "canvas" }}
-              style={{ height: 400 }}
+              style={{ width: "100%", height: "100%" }}
             />
 
             <div className="mt-6">
             <button
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 hidden md:block"
               onClick={() => { setShowLegend(showLegend => !showLegend) }}
             >
               Toggle Legend
             </button>
             </div>
         </div>
-        : <div className="overflow-x-auto">xxx</div>
+        : <div className="overflow-auto">xxx</div>
         }
       </div>
     </section>

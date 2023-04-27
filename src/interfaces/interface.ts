@@ -19,6 +19,7 @@ interface SeriesItems {
   type: 'line' | 'bar'
   stack?: string
   data: number[]
+  smooth?: boolean
 }
 
 interface Options {
