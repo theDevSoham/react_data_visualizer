@@ -4,6 +4,10 @@ const isNumber = (value: any): boolean => {
   return typeof value === 'number' && isFinite(value)
 }
 
+const lineOrArea = (currentTab: Tab['id']): boolean => {
+  return currentTab === 'line' || currentTab === 'area'
+}
+
 const getSeriesData = (
   data: WineData[],
   currentTab: Tab['id']
@@ -11,9 +15,10 @@ const getSeriesData = (
   return Object.keys(data[0]).map((key: string) => {
     return {
       name: key,
-      type: currentTab !== 'raw' ? currentTab : 'line',
-      stack: currentTab === 'line' ? 'stack' : undefined,
-      smooth: currentTab === 'line',
+      type: currentTab === 'line' || currentTab === 'bar' ? currentTab : 'line',
+      stack: lineOrArea(currentTab) ? 'stack' : undefined,
+      smooth: lineOrArea(currentTab),
+      areaStyle: currentTab === 'area' ? { normal: {} } : undefined,
       data: data.map((wine: WineData) => {
         if (isNumber(wine[key as keyof WineData])) {
           return wine[key as keyof WineData]

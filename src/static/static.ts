@@ -66,6 +66,10 @@ const tabs: Tab[] = [
     id: 'bar'
   },
   {
+    name: 'Area View',
+    id: 'area'
+  },
+  {
     name: 'Raw JSON',
     id: 'raw'
   }

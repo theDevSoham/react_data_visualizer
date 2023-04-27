@@ -19,6 +19,7 @@ interface SeriesItems {
   type: 'line' | 'bar'
   stack?: string
   data: number[]
+  areaStyle?: { normal: object }
   smooth?: boolean
 }
 
@@ -57,8 +58,8 @@ interface Options {
 }
 
 interface Tab {
-  name: 'Line View' | 'Bar View' | 'Raw JSON'
-  id: 'line' | 'bar' | 'raw'
+  name: 'Line View' | 'Bar View' | 'Area View' | 'Raw JSON'
+  id: 'line' | 'bar' | 'area' | 'raw'
 }
 
 export type { WineData, Options, SeriesItems, Tab }
